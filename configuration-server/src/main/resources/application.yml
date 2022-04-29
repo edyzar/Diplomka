@@ -1,0 +1,26 @@
+#nastavení portu aplikace
+server:
+  port: 8081
+
+spring:
+  application:
+    #nastavení jména aplikace
+    name: configuration-server
+  cloud:
+    #nastavení připojení ke konfiguračnímu souboru v GitHubu
+    config:
+      server:
+        git:
+          uri: 'https://github.com/edyzar/configuration-server'
+          clone-on-start: true
+
+#nastavení Eureky
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
