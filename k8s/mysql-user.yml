@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-user
+  labels:
+    app: mysql-user
+    tier: database
+spec:
+  selector: 
+    matchLabels:
+      app: mysql-user
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-user
+        tier: database
+    spec:
+      containers:
+      - image: mysql:5.7
+        args: ["--ignore-db-dir", "lost+found", "--character-set-server", "latin2", "--collation-server", "latin2_bin"]
+        name: mysql 
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-user-root-credentials
+              key: password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db-user-conf
+              key: name
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-user-credentials
+              key: username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-user-credentials
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql 
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-user
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-user
+  labels:
+    app: mysql-user
+    tier: database
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql-user
+    tier: database
+  clusterIP: None 
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-user-conf
+data:
+ host: mysql-user
+ name: userdb  
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-user-root-credentials
+data:
+ password: cm9vdA==
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-user-credentials
+data:
+ username: dXNlcg==
+ password: USVGdnFTJCpGJGteNmk=
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-user
+  labels:
+    app: mysql-user
+    tier: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi    
+

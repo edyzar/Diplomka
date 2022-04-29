@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configuration-server-app
+  labels:
+    app: configuration-server-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: configuration-server-app
+  template:
+    metadata: 
+      labels:
+        app: configuration-server-app
+    spec:
+      containers:
+        - name: configuration-server-app
+          image: edyzar/configuration-server:0.0.1
+          imagePullPolicy: Always
+          ports:
+           - containerPort: 8081
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: configuration-server-svc
+spec:
+  selector:
+    app: configuration-server-app
+  ports:
+    - port: 80
+      targetPort: 8081

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-service-app
+  labels:
+    app: shop-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shop-service-app
+  template:
+    metadata: 
+      labels:
+        app: shop-service-app
+    spec:
+      containers:
+        - name: shop-service-app
+          image: edyzar/shop-service:0.0.1
+          imagePullPolicy: Always
+          ports:
+           - containerPort: 8085
+          env: 
+          - name: DB_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: db-shop-conf
+                key: host
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: db-shop-conf
+                key: name
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: db-shop-credentials
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-shop-credentials
+                key: password 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-service-svc
+spec:
+  selector:
+    app: shop-service-app
+  ports:
+    - port: 80
+      targetPort: 8085

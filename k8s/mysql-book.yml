@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-book-conf
+data:
+ host: mysql-book
+ name: bookdb  
+ 
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-book
+  labels:
+    app: mysql-book
+    tier: database
+spec:
+  selector: 
+    matchLabels:
+      app: mysql-book
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-book
+        tier: database
+    spec:
+      containers:
+      - image: mysql:5.7
+        args: ["--ignore-db-dir", "lost+found", "--character-set-server", "latin2", "--collation-server", "latin2_bin"]
+        name: mysql 
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-book-root-credentials
+              key: password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db-book-conf
+              key: name
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-book-credentials
+              key: username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-book-credentials
+              key: password
+        ports:
+        - containerPort: 3308
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql 
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-book
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-book
+  labels:
+    app: mysql-book
+    tier: database
+spec:
+  ports:
+    - port: 3308
+      targetPort: 3308
+  selector:
+    app: mysql-book
+    tier: database
+  clusterIP: None 
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-book-root-credentials
+data:
+ password: cm9vdA==
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-book-credentials
+data:
+ username: dXNlcg==
+ password: USVGdnFTJCpGJGteNmk=
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-book
+  labels:
+    app: mysql-book
+    tier: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi    
+
