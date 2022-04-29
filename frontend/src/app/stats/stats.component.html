@@ -1,0 +1,120 @@
+<div class="grid">
+  <div *ngIf="customerStatsModels" class="field col-6">
+    <fieldset>
+      <legend>Oblíbené knihy uživatelů</legend>
+      <p-table [value]="customerStatsModels" responsiveLayout="scroll" sortField="customerStats.numberOfOwners"
+               [sortOrder]="-1">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="book.name">
+              Název knihy
+              <p-sortIcon field="book.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="book.author">
+              Autor
+              <p-sortIcon field="book.author"></p-sortIcon>
+            </th>
+            <th pSortableColumn="customerStats.numberOfOwners">
+              Počet uživatelů si oblíbilo
+              <p-sortIcon field="customerStats.numberOfOwners"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customerStatsModels>
+          <tr>
+            <td>{{customerStatsModels.book.name}}</td>
+            <td>{{customerStatsModels.book.author}}</td>
+            <td>{{customerStatsModels.customerStats.numberOfOwners}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </fieldset>
+  </div>
+
+  <div *ngIf="shopStatsModels" class="field col-6">
+    <fieldset>
+      <legend>Kniha prodávaná v obchodech</legend>
+      <p-table [value]="shopStatsModels" responsiveLayout="scroll" sortField="shopStats.salesPoints" [sortOrder]="-1">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="book.name">
+              Název knihy
+              <p-sortIcon field="book.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="book.author">
+              Autor
+              <p-sortIcon field="book.author"></p-sortIcon>
+            </th>
+            <th pSortableColumn="shopStats.salesPoints">
+              Počet obchodů prodávajících knihu
+              <p-sortIcon field="shopStats.salesPoints"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-shopStatsModel>
+          <tr>
+            <td>
+              <a (click)="showDetail(shopStatsModel)" style="text-decoration: underline">
+                {{shopStatsModel.book.name}}
+              </a>
+            </td>
+            <td>{{shopStatsModel.book.author}}</td>
+            <td>{{shopStatsModel.shopStats.salesPoints}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </fieldset>
+  </div>
+</div>
+
+<p-dialog [visible]="shopsDialog" [modal]="true" styleClass="p-fluid" closeIcon="false">
+  <p-header>Obchody prodávající knihu <b>{{this.headerDialog}}</b></p-header>
+  <ng-template pTemplate="content">
+    <p-table [value]="availableInShops" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            Název
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="street">
+            Ulice
+            <p-sortIcon field="street"></p-sortIcon>
+          </th>
+          <th pSortableColumn="city">
+            Město
+            <p-sortIcon field="city"></p-sortIcon>
+          </th>
+          <th pSortableColumn="postcode">
+            PSČ
+            <p-sortIcon field="postcode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="country">
+            Stát
+            <p-sortIcon field="country"></p-sortIcon>
+          </th>
+          <th pSortableColumn="size">
+            Velikost obchodu v m2
+            <p-sortIcon field="size"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-shop>
+        <tr>
+          <td>{{shop.name}}</td>
+          <td>{{shop.street}}</td>
+          <td>{{shop.city}}</td>
+          <td>{{shop.postcode}}</td>
+          <td>{{shop.country}}</td>
+          <td>{{shop.size}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Ukončit" icon="pi pi-times" class="p-button-text" (click)="closeDialog()"></button>
+  </ng-template>
+</p-dialog>
+
+

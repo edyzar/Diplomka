@@ -1,0 +1,65 @@
+<div class="grid" *ngIf="book">
+  <div class="col-12 flex align-items-center justify-content-center">
+    <fieldset [formGroup]="fg">
+      <legend>Detail knihy</legend>
+      <div class="p-fieldset-content">
+        <div class="field">
+          <h5>Název</h5>
+          <input type="text" formControlName="name" pInputText required>
+        </div>
+
+        <div *ngIf="nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="nameCtrl.errors?.['required']">
+            Název knihy je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Author</h5>
+          <input type="text" formControlName="author" pInputText required>
+        </div>
+
+
+        <div *ngIf="authorCtrl.invalid && (authorCtrl.dirty || authorCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="authorCtrl.errors?.['required']">
+            Autor je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Datum vydání</h5>
+          <input type="date" formControlName="published" pInputText required>
+        </div>
+
+
+        <div *ngIf="publishedCtrl.invalid && (publishedCtrl.dirty || publishedCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="publishedCtrl.errors?.['required']">
+            Datum vydání je povinné.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Počet stran</h5>
+          <input type="text" formControlName="pages" pInputText required>
+        </div>
+
+        <div *ngIf="pagesCtrl.invalid && (pagesCtrl.dirty || pagesCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="pagesCtrl.errors?.['required']">
+            Počet stran je povinný.
+          </div>
+        </div>
+      </div>
+
+      <button type="button" label="Uložit" pButton (click)="saveBook()" [disabled]="isSaveDisabled"
+              *ngIf="isAdmin"></button>
+    </fieldset>
+  </div>
+</div>

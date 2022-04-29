@@ -1,0 +1,56 @@
+<fieldset>
+  <legend>Všechny obchody</legend>
+
+  <p-table [value]="shops" responsiveLayout="scroll" sortField="bookIds" [sortOrder]="-1">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">
+          Název
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="street">
+          Ulice
+          <p-sortIcon field="street"></p-sortIcon>
+        </th>
+        <th pSortableColumn="city">
+          Město
+          <p-sortIcon field="city"></p-sortIcon>
+        </th>
+        <th pSortableColumn="postcode">
+          PSČ
+          <p-sortIcon field="postcode"></p-sortIcon>
+        </th>
+        <th pSortableColumn="country">
+          Stát
+          <p-sortIcon field="country"></p-sortIcon>
+        </th>
+        <th pSortableColumn="size">
+          Velikost obchodu v m2
+          <p-sortIcon field="size"></p-sortIcon>
+        </th>
+        <th pSortableColumn="bookIds">
+          Počet nabízených knih
+          <p-sortIcon field="bookIds"></p-sortIcon>
+        </th>
+        <th *ngIf="isAdmin">Editace</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-shop>
+      <tr>
+        <td><a routerLink="/detailshop/{{shop.shopId}}">{{shop.name}}</a></td>
+        <td>{{shop.street}}</td>
+        <td>{{shop.city}}</td>
+        <td>{{shop.postcode}}</td>
+        <td>{{shop.country}}</td>
+        <td>{{shop.size}}</td>
+        <td>{{shop.bookIds.length}}</td>
+        <td *ngIf="isAdmin">
+          <button class="p-button-info" type="button" icon="pi pi-pencil" pButton
+                  routerLink="/detailshop/{{shop.shopId}}"></button>
+          <button class="p-button-danger" type="button" icon="pi pi-trash" pButton
+                  (click)="deleteShop(shop.shopId)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</fieldset>

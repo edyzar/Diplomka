@@ -1,0 +1,179 @@
+<div class="grid">
+
+  <div *ngIf="shopModel" class="field col-2">
+    <fieldset [formGroup]="fg">
+      <legend>Detail obchodu</legend>
+      <div class="p-fieldset-content">
+        <div class="field">
+          <h5>Název</h5>
+          <input type="text" formControlName="name" pInputText required>
+        </div>
+
+        <div *ngIf="shopNameCtrl.invalid && (shopNameCtrl.dirty || shopNameCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="shopNameCtrl.errors?.['required']">
+            Název obchodu je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Velikost v m2</h5>
+          <input type="text" formControlName="size" pInputText required>
+        </div>
+
+        <div *ngIf="sizeCtrl.invalid && (sizeCtrl.dirty || sizeCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="sizeCtrl.errors?.['required']">
+            Velikost obchodu je povinná.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Ulice</h5>
+          <input type="text" formControlName="street" pInputText required>
+        </div>
+
+        <div *ngIf="streetCtrl.invalid && (streetCtrl.dirty || streetCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="streetCtrl.errors?.['required']">
+            Název ulice je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Město</h5>
+          <input type="text" formControlName="city" pInputText required>
+        </div>
+
+        <div *ngIf="cityCtrl.invalid && (cityCtrl.dirty || cityCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="cityCtrl.errors?.['required']">
+            Název města je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>PSČ</h5>
+          <input type="text" formControlName="postcode" pInputText required>
+        </div>
+
+        <div *ngIf="postcodeCtrl.invalid && (postcodeCtrl.dirty || postcodeCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="postcodeCtrl.errors?.['required']">
+            PSČ je povinné.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Stát</h5>
+          <input type="text" formControlName="country" pInputText required>
+        </div>
+      </div>
+
+      <div *ngIf="countryCtrl.invalid && (countryCtrl.dirty || countryCtrl.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="countryCtrl.errors?.['required']">
+          Název státu je povinný.
+        </div>
+      </div>
+
+      <button type="button" label="Uložit" pButton (click)="saveShop()" [disabled]="isSaveDetailDisabled"
+              *ngIf="isAdmin">
+      </button>
+    </fieldset>
+  </div>
+
+  <div class="field col-10">
+    <fieldset>
+      <legend>Prodávané knihy v obchodě</legend>
+
+      <div class="row">
+        <div class="col text-right">
+          <button class="p-button-success" icon="pi pi-plus" type="button" label="Přidat knihu" pButton
+                  (click)="addBook()" *ngIf="isAdmin"></button>
+        </div>
+      </div>
+
+      <div class="row">
+        <p-table [value]="shopBooks" responsiveLayout="scroll" sortField="name">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name">
+                Název knihy
+                <p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="author">
+                Autor
+                <p-sortIcon field="author"></p-sortIcon>
+              </th>
+              <th pSortableColumn="pages">
+                Počet stránek
+                <p-sortIcon field="pages"></p-sortIcon>
+              </th>
+              <th pSortableColumn="published">
+                Datum vydání
+                <p-sortIcon field="published"></p-sortIcon>
+              </th>
+              <th *ngIf="isAdmin">Editace</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-books>
+            <tr>
+              <td>{{books.name}}</td>
+              <td>{{books.author}}</td>
+              <td>{{books.pages}}</td>
+              <td>{{books.published}}</td>
+              <td *ngIf="isAdmin">
+                <button class="p-button-danger" type="button" icon="pi pi-trash" pButton
+                        (click)="deleteBook(books.bookId)">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </fieldset>
+  </div>
+
+</div>
+
+<p-dialog [visible]="bookDialog" [style]="{width: '450px'}" header="Detail knihy" [modal]="true" styleClass="p-fluid"
+          closeIcon="false">
+  <ng-template pTemplate="content" [formGroup]="fgBook">
+    <div class="field">
+      <label for="name">Název knihy</label>
+      <p-dropdown formControlName="name" id="name" [options]="dialogBooks" optionLabel="name" placeholder="Vyberte"
+                  (onChange)="fillDetail()">
+      </p-dropdown>
+    </div>
+    <div class="field">
+      <div class="field">
+        <label for="author">Autor</label>
+        <input type="text" pInputText formControlName="author" id="author">
+      </div>
+    </div>
+    <div class="field">
+      <div class="field">
+        <label for="pages">Počet stránek</label>
+        <input type="text" pInputText formControlName="pages" id="pages">
+      </div>
+    </div>
+    <div class="field">
+      <label for="published">Datum vydání</label>
+      <input type="text" pInputText formControlName="published" id="published">
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Ukončit" icon="pi pi-times" class="p-button-text" (click)="closeDialog()"></button>
+    <button pButton pRipple label="Uložit" icon="pi pi-check" class="p-button-text" (click)="saveBook()"
+            [disabled]="isSaveBookDisabled"></button>
+  </ng-template>
+</p-dialog>
+

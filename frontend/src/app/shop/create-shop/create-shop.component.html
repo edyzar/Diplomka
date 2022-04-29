@@ -1,0 +1,88 @@
+<div class="grid">
+  <div class="col-12 flex align-items-center justify-content-center">
+    <fieldset [formGroup]="fg">
+      <legend>Nový obchod</legend>
+      <div class="p-fieldset-content">
+        <div class="field">
+          <h5>Název</h5>
+          <input type="text" formControlName="name" pInputText required>
+        </div>
+
+        <div *ngIf="nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="nameCtrl.errors?.['required']">
+            Název obchodu je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Velikost v m2</h5>
+          <input type="text" formControlName="size" pInputText required>
+        </div>
+
+        <div *ngIf="sizeCtrl.invalid && (sizeCtrl.dirty || sizeCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="sizeCtrl.errors?.['required']">
+            Velikost obchodu je povinná.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Ulice</h5>
+          <input type="text" formControlName="street" pInputText required>
+        </div>
+
+        <div *ngIf="streetCtrl.invalid && (streetCtrl.dirty || streetCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="streetCtrl.errors?.['required']">
+            Název ulice je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Město</h5>
+          <input type="text" formControlName="city" pInputText required>
+        </div>
+
+        <div *ngIf="cityCtrl.invalid && (cityCtrl.dirty || cityCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="cityCtrl.errors?.['required']">
+            Název města je povinný.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>PSČ</h5>
+          <input type="text" formControlName="postcode" pInputText required>
+        </div>
+
+        <div *ngIf="postcodeCtrl.invalid && (postcodeCtrl.dirty || postcodeCtrl.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="postcodeCtrl.errors?.['required']">
+            PSČ je povinné.
+          </div>
+        </div>
+
+        <div class="field">
+          <h5>Stát</h5>
+          <input type="text" formControlName="country" pInputText required>
+        </div>
+      </div>
+
+      <div *ngIf="countryCtrl.invalid && (countryCtrl.dirty || countryCtrl.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="countryCtrl.errors?.['required']">
+          Název státu je povinný.
+        </div>
+      </div>
+
+      <button type="button" label="Uložit" pButton (click)="saveShop()" [disabled]="isSaveDisabled"></button>
+    </fieldset>
+  </div>
+</div>

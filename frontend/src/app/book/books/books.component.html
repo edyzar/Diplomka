@@ -1,0 +1,35 @@
+<fieldset>
+  <legend>Všechny knihy</legend>
+
+  <p-table [value]="books" responsiveLayout="scroll" sortField="name">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Název knihy
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="author">Autor
+          <p-sortIcon field="author"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pages">Počet stránek
+          <p-sortIcon field="pages"></p-sortIcon>
+        </th>
+        <th pSortableColumn="published">Datum vydání
+          <p-sortIcon field="published"></p-sortIcon>
+        </th>
+        <th *ngIf="isAdmin">Editace</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-books>
+      <tr>
+        <td><a routerLink="/detailbook/{{books.bookId}}">{{books.name}}</a></td>
+        <td>{{books.author}}</td>
+        <td>{{books.pages}}</td>
+        <td>{{books.published}}</td>
+        <td *ngIf="isAdmin">
+          <button class="p-button-info" type="button" icon="pi pi-pencil" pButton
+                  routerLink="/detailbook/{{books.bookId}}"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</fieldset>

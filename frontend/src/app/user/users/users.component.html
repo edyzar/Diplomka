@@ -1,0 +1,43 @@
+<fieldset>
+  <legend>Všechni zákazníci</legend>
+  <p-table [value]="users" responsiveLayout="scroll" sortField="bookIds">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="firstName">
+          Jméno
+          <p-sortIcon field="firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastName">
+          Příjmení
+          <p-sortIcon field="lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">
+          Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="city">
+          Město bydliště
+          <p-sortIcon field="city"></p-sortIcon>
+        </th>
+        <th pSortableColumn="bookIds">
+          Počet oblíbených knih
+          <p-sortIcon field="bookIds"></p-sortIcon>
+        </th>
+        <th>Editace</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-users>
+      <tr>
+        <td><a routerLink="/detailuser/{{users.userId}}">{{users.firstName}}</a></td>
+        <td>{{users.lastName}}</td>
+        <td>{{users.email}}</td>
+        <td>{{users.city}}</td>
+        <td>{{users.bookIds.length}}</td>
+        <td>
+            <button class="p-button-info" type="button" icon="pi pi-pencil" pButton routerLink="/detailuser/{{users.userId}}"></button>
+            <button class="p-button-danger" type="button" icon="pi pi-trash" pButton (click)="deleteUser(users.userId)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</fieldset>

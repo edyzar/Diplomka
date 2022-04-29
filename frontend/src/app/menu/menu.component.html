@@ -1,0 +1,56 @@
+<div *ngIf="isUserLogged && isAdmin">
+  <p-menubar [model]="menuItemsAdmin">
+    <ng-template pTemplate="start">
+      <h2>KnihuKup</h2>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div *ngIf="!isUserLogged; else logoutVisible">
+        <button type="button" class="p-button" icon="pi pi-sign-in" label="Log in" pButton (click)="login()">
+        </button>
+      </div>
+
+      <ng-template #logoutVisible>
+        <button type="button" class="p-button-danger" icon="pi pi-sign-out" label="Log out" pButton (click)="logout()">
+        </button>
+      </ng-template>
+    </ng-template>
+  </p-menubar>
+</div>
+
+<div *ngIf="isUserLogged && !isAdmin">
+  <p-menubar [model]="menuItemsUser">
+    <ng-template pTemplate="start">
+      <h2>KnihuKup</h2>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div *ngIf="!isUserLogged; else logoutVisible">
+        <button type="button" class="p-button" icon="pi pi-sign-in" label="Log in" pButton (click)="login()">
+        </button>
+      </div>
+
+      <ng-template #logoutVisible>
+        <button type="button" class="p-button-danger" icon="pi pi-sign-out" label="Log out" pButton (click)="logout()">
+        </button>
+      </ng-template>
+    </ng-template>
+  </p-menubar>
+</div>
+
+<div *ngIf="!isUserLogged && !isAdmin">
+  <p-menubar [model]="menuItemsPublic">
+    <ng-template pTemplate="start">
+      <h2>KnihuKup</h2>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div *ngIf="!isUserLogged; else logoutVisible">
+        <button type="button" class="p-button" icon="pi pi-sign-in" label="Log in" pButton (click)="login()">
+        </button>
+      </div>
+
+      <ng-template #logoutVisible>
+        <button type="button" class="p-button-danger" icon="pi pi-sign-out" label="Log out" pButton (click)="logout()">
+        </button>
+      </ng-template>
+    </ng-template>
+  </p-menubar>
+</div>
