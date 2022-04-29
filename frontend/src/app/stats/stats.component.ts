@@ -55,9 +55,9 @@ export class StatsComponent {
 
   showDetail(shopStatsModel: ShopStatsModel) {
     this.shopsDialog = true;
-    this.headerDialog = shopStatsModel.book.name;
+    this.headerDialog = shopStatsModel.bookDto.name;
     this.shopService.findAllShops().pipe(map(it => {
-      return it.filter(v => v.bookIds?.includes(shopStatsModel.book.bookId!))
+      return it.filter(v => v.bookIds?.includes(shopStatsModel.bookDto.bookId!))
     })).subscribe(
       (it: Shop[]) => {
         this.availableInShops = it

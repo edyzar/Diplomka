@@ -62,8 +62,8 @@ export class DetailUserComponent implements OnInit {
         this.userModel = data;
 
 
-        if (this.userModel.books !== undefined) {
-          this.userBooks = this.userModel.books;
+        if (this.userModel.bookDtos !== undefined) {
+          this.userBooks = this.userModel.bookDtos;
         }
 
         this.firstNameCtrl.setValue(this.userModel.user.firstName);
@@ -155,7 +155,7 @@ export class DetailUserComponent implements OnInit {
     this.bookDialog = true;
 
     this.bookService.findAllBooks().pipe(
-      map((val: Book[]) => val.filter(id1 => !this.userModel.books?.find(id2 => id2.bookId === id1.bookId))))
+      map((val: Book[]) => val.filter(id1 => !this.userModel.bookDtos?.find(id2 => id2.bookId === id1.bookId))))
       .subscribe(it => this.dialogBooks = it);
 
   }

@@ -7,5 +7,5 @@ export class CustomerStats {
 
 export class CustomerStatsModel {
   customerStats: CustomerStats;
-  book: Book;
+  bookDto: Book;
 }

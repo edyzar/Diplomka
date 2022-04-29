@@ -22,8 +22,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-customerStatsModels>
           <tr>
-            <td>{{customerStatsModels.book.name}}</td>
-            <td>{{customerStatsModels.book.author}}</td>
+            <td>{{customerStatsModels.bookDto.name}}</td>
+            <td>{{customerStatsModels.bookDto.author}}</td>
             <td>{{customerStatsModels.customerStats.numberOfOwners}}</td>
           </tr>
         </ng-template>
@@ -55,10 +55,10 @@
           <tr>
             <td>
               <a (click)="showDetail(shopStatsModel)" style="text-decoration: underline">
-                {{shopStatsModel.book.name}}
+                {{shopStatsModel.bookDto.name}}
               </a>
             </td>
-            <td>{{shopStatsModel.book.author}}</td>
+            <td>{{shopStatsModel.bookDto.author}}</td>
             <td>{{shopStatsModel.shopStats.salesPoints}}</td>
           </tr>
         </ng-template>

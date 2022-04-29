@@ -11,5 +11,5 @@ export class User {
 
 export class UserModel {
   user: User;
-  books?: Book[];
+  bookDtos?: Book[];
 }

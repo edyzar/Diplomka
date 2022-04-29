@@ -13,5 +13,5 @@ export class Shop {
 
 export class ShopModel {
   shop: Shop
-  books?: Book[];
+  bookDtos?: Book[];
 }

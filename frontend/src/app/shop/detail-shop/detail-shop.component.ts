@@ -69,8 +69,8 @@ export class DetailShopComponent implements OnInit {
       data => {
         this.shopModel = data;
 
-        if (this.shopModel.books != undefined) {
-          this.shopBooks = this.shopModel.books;
+        if (this.shopModel.bookDtos != undefined) {
+          this.shopBooks = this.shopModel.bookDtos;
         }
 
         this.sizeCtrl.setValue(this.shopModel.shop.size);
@@ -176,7 +176,7 @@ export class DetailShopComponent implements OnInit {
     this.bookDialog = true;
 
     this.bookService.findAllBooks().pipe(
-      map((val: Book[]) => val.filter(id1 => !this.shopModel.books?.find(id2 => id2.bookId === id1.bookId))))
+      map((val: Book[]) => val.filter(id1 => !this.shopModel.bookDtos?.find(id2 => id2.bookId === id1.bookId))))
       .subscribe(it => this.dialogBooks = it);
   }
 

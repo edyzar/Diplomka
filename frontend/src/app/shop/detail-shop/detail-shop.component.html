@@ -123,15 +123,15 @@
               <th *ngIf="isAdmin">Editace</th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-books>
+          <ng-template pTemplate="body" let-shopBooks>
             <tr>
-              <td>{{books.name}}</td>
-              <td>{{books.author}}</td>
-              <td>{{books.pages}}</td>
-              <td>{{books.published}}</td>
+              <td>{{shopBooks.name}}</td>
+              <td>{{shopBooks.author}}</td>
+              <td>{{shopBooks.pages}}</td>
+              <td>{{shopBooks.published}}</td>
               <td *ngIf="isAdmin">
                 <button class="p-button-danger" type="button" icon="pi pi-trash" pButton
-                        (click)="deleteBook(books.bookId)">
+                        (click)="deleteBook(shopBooks.bookId)">
                 </button>
               </td>
             </tr>
