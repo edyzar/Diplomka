@@ -1,0 +1,32 @@
+#nastavení portu aplikace
+server:
+  port: 8084
+
+spring:
+  application:
+    #nastavení jména aplikace
+    name: book-service
+  #nastavení připojení k databází
+  datasource:
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.jdbc.Driver
+  #nastavení jpa pro práci s databází
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+#nastavení Eureky
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka

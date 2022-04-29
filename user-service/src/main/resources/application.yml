@@ -1,0 +1,46 @@
+#nastavení portu aplikace
+server:
+  port: 8082
+
+spring:
+  application:
+    #nastavení jména aplikace
+    name: user-service
+  #nastavení připojení k databází
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  #nastavení jpa pro práci s databází
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  #nastavení připojení k RabbitMQ
+  rabbitmq:
+    host: rabbitmq-service
+    port: 5672
+    connection-timeout: 2000
+
+#nastavení připojení ke Keycloaku
+keycloak:
+  realm: diplomka-realm
+  auth-server-url: http://keycloak-service:8080/auth
+  resource: diplomka-server
+  bearer-only: true
+  ssl-required: external
+  use-resource-role-mappings: true
+
+#nastavení Eureky
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka

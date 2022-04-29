@@ -1,0 +1,30 @@
+#nastavení portu aplikace
+server:
+  port: 8083
+
+spring:
+  application:
+    #nastavení jména aplikace
+    name: api-gateway
+
+#nastavení management
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'
+  endpoint:
+    health:
+      show-details: always
+
+#nastavení Eureky
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
