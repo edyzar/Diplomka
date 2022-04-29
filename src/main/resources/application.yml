@@ -1,0 +1,20 @@
+#nastavení portu aplikace
+server:
+  port: 8761
+
+spring:
+  application:
+    #nastavení jména aplikace
+    name: service-registry
+
+#nastavení Eureky
+eureka:
+  server:
+    renewalPercentThreshold: 0.33
+  instance:
+    hostname: "${HOSTNAME}.eureka"
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS}
