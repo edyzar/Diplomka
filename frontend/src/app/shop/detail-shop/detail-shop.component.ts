@@ -147,7 +147,6 @@ export class DetailShopComponent implements OnInit {
         duration: 3000
       })
     });
-    window.location.reload();
   }
 
   private setShop(): Shop {
@@ -207,7 +206,6 @@ export class DetailShopComponent implements OnInit {
         duration: 3000
       })
     });
-    window.location.reload();
   }
 
   fillDetail() {

@@ -29,7 +29,6 @@ export class UsersComponent {
 
   deleteUser(userId: number) {
     this.userService.deleteUserById(userId).subscribe();
-    window.location.reload();
   }
 
 }

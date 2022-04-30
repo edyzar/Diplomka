@@ -128,7 +128,6 @@ export class DetailUserComponent implements OnInit {
         duration: 3000
       })
     });
-    window.location.reload();
   }
 
   private setUser(): User {
@@ -187,7 +186,6 @@ export class DetailUserComponent implements OnInit {
         duration: 3000
       })
     });
-    window.location.reload();
   }
 
   fillDetail() {

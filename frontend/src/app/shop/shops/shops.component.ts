@@ -32,7 +32,6 @@ export class ShopsComponent implements OnInit {
 
   deleteShop(shopId: number) {
     this.shopService.deleteShopById(shopId).subscribe();
-    window.location.reload();
   }
 
   ngOnInit(): void {
