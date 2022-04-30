@@ -28,7 +28,18 @@ export class UsersComponent {
   }
 
   deleteUser(userId: number) {
-    this.userService.deleteUserById(userId).subscribe();
+    this.userService.deleteUserById(userId).subscribe({
+      next: () => this.toastService.success({
+        detail: "Informace",
+        summary: "Odebrání zákazníka proběhlo v pořádku",
+        duration: 3000
+      }),
+      error: (error: HttpErrorResponse) => this.toastService.error({
+        detail: "Chyba",
+        summary: error.statusText,
+        duration: 3000
+      })
+    });
   }
 
 }

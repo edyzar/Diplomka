@@ -31,7 +31,18 @@ export class ShopsComponent implements OnInit {
   }
 
   deleteShop(shopId: number) {
-    this.shopService.deleteShopById(shopId).subscribe();
+    this.shopService.deleteShopById(shopId).subscribe({
+      next: () => this.toastService.success({
+          detail: "Informace",
+          summary: "Odebrání obchodu proběhlo v pořádku",
+          duration: 3000
+        }),
+      error: (error: HttpErrorResponse) => this.toastService.error({
+        detail: "Chyba",
+        summary: error.statusText,
+        duration: 3000
+      })
+    });
   }
 
   ngOnInit(): void {
